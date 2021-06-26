@@ -1,0 +1,28 @@
+.button {
+    margin-top: 2rem;
+    width: 20rem;
+    color: white;
+    background-color: #505564;
+    height: 3rem;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.form_container {
+    padding: 2rem;
+    border: 1px solid #dddddd;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    width: 20rem;
+}
+
+.login_form {
+    padding: 1.5rem;
+}
+
+.input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #505564;
+    font-size: 14px;
+    opacity: 1; /* Firefox */
+  }
+
+/* Dark Grey:  #505564*/

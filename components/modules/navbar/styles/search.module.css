@@ -1,0 +1,9 @@
+.search input {
+    border-radius: 6px;
+    height: 44px;
+    border: 1px solid #dddddd;
+}
+
+.search input select textarea {
+    color: "3dee2e6l";
+}
