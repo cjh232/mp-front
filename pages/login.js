@@ -9,7 +9,7 @@ export default function Login() {
     return (
         <Layout login>
             <Center className={styles.login_container}>
-                <HStack height="400px" divider={<StackDivider />}>
+                <HStack height="425px" divider={<StackDivider />}>
                     <Slogan />
                     <LoginForm ml="3.5rem" />
                 </HStack>

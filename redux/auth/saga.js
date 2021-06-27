@@ -1,22 +1,15 @@
-import {
-    takeLatest,
-    call,
-    put
-} from 'redux-saga/effects';
-
+import { takeLatest, call, put } from 'redux-saga/effects';
 import {
     logInSuccess,
-    logInFailure
+    logInFailure,
+    storeUserEmail
 } from './actions'
-
-import {
-    loginApi
-} from './api'
+import { loginApi } from './api'
 
 
 function* loginEffectSaga(action) {
     try {
-        const {email, password, router} = action.payload;
+        const {email, password, rememberUser, router} = action.payload;
 
         let { token } = yield call(loginApi, {email, password});
 
@@ -27,11 +20,25 @@ function* loginEffectSaga(action) {
 
         yield put(logInSuccess(tokenPair))
 
+        if (rememberUser) {
+            yield put(storeUserEmail(email))
+        }
+
         router.push('/');
 
     } catch (error) {
-        console.log('error', error)
-        // yield put(logInFailure(error.response.data.detail))
+        let errorResponse;
+
+        if (error.response && error.response.data) {
+            errorResponse = error.response.data
+            yield put(logInFailure(errorResponse))
+        } else if(error.request) {
+            errorResponse = {
+                detail: "Failed to connect to backend server."
+            }
+            yield put(logInFailure(errorResponse))
+        }
+        
     }
 }
 

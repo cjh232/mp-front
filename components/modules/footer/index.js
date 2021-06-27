@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, HStack, Flex, Text, Center, Link, StackDivider, Spacer  } from '@chakra-ui/react';
 import { FaReact, FaPython } from 'react-icons/fa'
-import { SiRedux, SiDjango, SiJavascript } from 'react-icons/si'
+import { SiRedux, SiDjango, SiJavascript, SiNextDotJs } from 'react-icons/si'
 
 import styles from './styles/footer.module.css'
 
@@ -30,7 +30,7 @@ export default function Footer() {
 
 function FooterTools () {
 
-    const tools = ["React", "Django", "Redux", "Python", "Javascript"];
+    const tools = ["React", "Django", "Redux", "Python", "Javascript", "NextJS"];
 
     return (
         <HStack spacing={3}>
@@ -64,6 +64,8 @@ function ToolIcon ({toolString}) {
             return <FaPython/>
         case "Javascript":
             return <SiJavascript/>
+        case "NextJS":
+            return <SiNextDotJs />
         default:
             return <div></div>
     }

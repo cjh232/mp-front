@@ -20,3 +20,10 @@ export const logInFailure = (error) => {
         payload: error
     }
 }
+
+export const storeUserEmail = (email) => {
+    return {
+        type: types.STORE_USER_EMAIL,
+        payload: email
+    }
+}

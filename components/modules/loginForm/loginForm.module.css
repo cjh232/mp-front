@@ -25,4 +25,17 @@
     opacity: 1; /* Firefox */
   }
 
+
+
+.input:focus {
+    border-color: #FB4AA5;
+}
+
+.error_msg {
+    margin-top: .25rem;
+    font-size: 12px;
+    color: red;
+    position: absolute;
+}
+
 /* Dark Grey:  #505564*/
