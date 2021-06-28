@@ -20,3 +20,5 @@ Application supports the creation of custom user accounts. This will allow users
  - Stay up to date with any new information regarding the charity.
 
 ![image](https://user-images.githubusercontent.com/46171942/123557627-e774f980-d75f-11eb-94af-675847567019.png)
+
+![Register](https://user-images.githubusercontent.com/46171942/123714307-0f3d8d80-d844-11eb-8720-94516a4ef2d4.png)
