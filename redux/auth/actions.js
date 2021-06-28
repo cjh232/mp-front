@@ -1,5 +1,11 @@
 import types from './types';
 
+export const logInStarted = () => {
+    return {
+        type: types.LOG_IN_START,
+    }
+}
+
 export const logInRequested = (payload) => {
     return {
         type: types.LOG_IN_REQUESTED,

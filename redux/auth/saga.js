@@ -2,12 +2,16 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import {
     logInSuccess,
     logInFailure,
-    storeUserEmail
+    storeUserEmail,
+    logInStarted
 } from './actions'
 import { loginApi } from './api'
 
 
 function* loginEffectSaga(action) {
+
+    yield put(logInStarted())
+
     try {
         const {email, password, rememberUser, router} = action.payload;
 
@@ -39,7 +43,7 @@ function* loginEffectSaga(action) {
             yield put(logInFailure(errorResponse))
         }
         
-    }
+    } 
 }
 
 export function* loginWatcherSaga() {

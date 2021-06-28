@@ -3,6 +3,7 @@ const userActionTypes = {
     LOG_IN_SUCCESS: 'LOG_IN_SUCCESS',
     LOG_IN_FAILURE: 'LOG_IN_FAILURE',
     STORE_USER_EMAIL: 'STORE_USER_EMAIL',
+    LOG_IN_START: 'LOG_IN_START'
 }
 
 export default userActionTypes;

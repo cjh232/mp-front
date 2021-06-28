@@ -16,7 +16,7 @@ export default function Footer() {
         flexDirection="row" 
         justify="space-between"
         align="center"
-        bg="pink.500"
+        bg="primary"
         color="white">
         
             <FooterTools />

@@ -11,7 +11,7 @@ export default function Login() {
             <Center className={styles.login_container}>
                 <HStack height="425px" divider={<StackDivider />}>
                     <Slogan />
-                    <LoginForm ml="3.5rem" />
+                    <LoginForm ml="3rem" />
                 </HStack>
             </Center>
         </Layout>
@@ -21,14 +21,15 @@ export default function Login() {
 
 function Slogan () {
     return (
-        <Center h="100%" w="500px">
+        <Center h="100%" w="550px">
             <Container centerContent textAlign="center">
                 <Text 
-                    fontWeight="600"
-                    fontSize="72px"
+                    fontWeight="700"
+                    fontSize="82px"
+                    color="grey_dark"
                 >Work it, Girl!</Text>
-                <Container>
-                    <Text fontSize="32px">Free Clothes for Working Women.</Text>
+                <Container w="100%">
+                    <Text fontSize="32px" color="grey_dark">Free Clothes for Working Women.</Text>
                 </Container>
             </Container>
         </Center>
