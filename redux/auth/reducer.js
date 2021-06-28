@@ -6,9 +6,11 @@ const initAuthState = {
     token: null,
     expiry: null,
     storedUser: null,
-    error: null,
-    requestActive: false,
-
+    requestStatus: {
+        active: false,
+        error: null,
+        success: null
+    },
 }
 
 const authReducer = (state = initAuthState, action) => {
@@ -16,22 +18,31 @@ const authReducer = (state = initAuthState, action) => {
         case types.LOG_IN_START:
             return {
                 ...state,
-                requestActive: true
+                requestStatus: {
+                    ...state.requestStatus,
+                    active: true,
+                }
             }
         case types.LOG_IN_SUCCESS:
             return {
                 token: action.payload.token,
                 expiry: action.payload.expiry,
-                error: null,
-                requestActive: false
+                requestStatus: {
+                    active: false,
+                    success: true,
+                    error: null,
+                },
             }
         case types.LOG_IN_FAILURE:
             return {
                 ...state,
                 token: null,
                 expiry: null,
-                error: action.payload,
-                requestActive: false
+                requestStatus: {
+                    active: false,
+                    success: false,
+                    error: action.payload
+                }
             }
         case types.STORE_USER_EMAIL:
             return {
@@ -47,7 +58,7 @@ const authReducer = (state = initAuthState, action) => {
 const authPersistConfig = {
     key: 'auth',
     storage: storage,
-    blacklist: ['error']
+    blacklist: ['requestStatus']
   }
 
 

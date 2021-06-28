@@ -13,7 +13,11 @@ export default function SubmitButton (props) {
             align="center"
         >
             <Button
-                colorScheme="pink"  
+                bg="primary"
+                color="white"
+                _hover={{filter: "brightness(110%)"}}
+                borderRadius="5px"
+                fontWeight="400"
                 w="100%"
                 h="3rem"
                 type="submit"
@@ -21,13 +25,9 @@ export default function SubmitButton (props) {
                 isFullWidth
             >Join Now!</Button>
 
-            <Text mt="1rem">
+            <Text mt="1rem" fontSize="16px" color="text_mute">
                 Already have an account?
-                <Link 
-                    ml=".5rem" 
-                    color="primary"
-                    fontWeight="600"
-                >Log In</Link>
+                <Link ml=".5rem" color="primary">Log In</Link>
             </Text>
 
         </Flex>

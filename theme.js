@@ -10,11 +10,11 @@ const theme = extendTheme({
     primary: "#EC4899",
     pink_secondary: "#F472B6",
     pink_emphasize: "#EC4899",
+    heading: "#111827",
+    sub_heading: "#505564",
+    text_mute: "#9CA3AF",
     grey_accent: "#DCE6EB",
     grey_secondary: "#D1D5DB",
-    grey_emphasize: "#505564",
-    grey_dark: "#111827",
-    grey_mute: "#9CA3AF"
   },
   fonts: {
     heading: "Open Sans",

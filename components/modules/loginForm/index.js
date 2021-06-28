@@ -1,5 +1,4 @@
 import React from 'react';
-import { useBoolean } from "@chakra-ui/react"
 import { useRouter } from 'next/router'
 
 // FORM VALIDATION
@@ -28,17 +27,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './loginForm.module.css';
 
 // ELEMENTS
-import EmailInput from './elements/EmailInput';
-import PasswordInput from './elements/PasswordInput';
+import FormInput from '../../elements/FromInput';
+import { HiOutlineMail, HiOutlineKey } from 'react-icons/hi';
 
 export default function LoginForm (props) {
-
-    const [showPassword, setShowPassword] = useBoolean(false)
-    
+   
     const authReducer = useSelector(state => state.auth)
     const storedUser = authReducer.storedUser
-    const authError = authReducer.error
-    const loginRequestActive = authReducer.requestActive
+    const requestStatus = authReducer.requestStatus
     
     const dispatch = useDispatch();
     const router = useRouter();
@@ -55,14 +51,33 @@ export default function LoginForm (props) {
         })
     }
 
+    const successToast = () => {
+        return toast({
+            title: 'Login Success',
+            description: "Redirecting...",
+            status: "success",
+            duration: 1000,
+            position: "top",
+        })
+    }
+
     React.useEffect(() => {
-        if(authError !== null) {
-            if(authError.detail) {
-                authErrorToast(authError.detail);
+        // Request Status changes twice, once when request starts
+        // and once when it ends. Want to pick up only the ending change.
+        if(requestStatus.active) {
+            return
+        }
+        if(!requestStatus.success) {
+            if(requestStatus.error !== null && requestStatus.error.detail) {
+                authErrorToast(requestStatus.error.detail);
             }
             
+        } else {
+            successToast()
         }
-    }, [authError])
+
+    }, [requestStatus])
+
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Enter a valid email please.').required('Uh oh, you\'re missing your email...'),
@@ -112,23 +127,32 @@ export default function LoginForm (props) {
             <WelcomeText />
     
             <form id="login" onSubmit={handleSubmit(onSubmit)} className={styles.login_form}>
-
-                <EmailInput register={register} errors={errors}/>
-    
-                <PasswordInput 
-                    register={register} 
-                    showPassword={showPassword}
-                    togglePasswordShow={setShowPassword.toggle}
-                    errors={errors}
+                
+                <FormInput 
+                    placeholder="Email address"
+                    id="email"
+                    register={register}
+                    error={errors.email}
+                    leftIcon={<HiOutlineMail size="16px" />}
                 />
-    
+
+                <FormInput 
+                    mt="2rem"
+                    placeholder="Password"
+                    id="password"
+                    isPassword
+                    register={register}
+                    error={errors.password}
+                    leftIcon={<HiOutlineKey size="16px" />}
+                />
+        
                 <StoreUserSwitch register={register}/>
                 
                 <HelpSection/>
                 
             </form>
 
-            <SubmitButton loginRequestActive={loginRequestActive}/>
+            <SubmitButton loginRequestActive={requestStatus.active}/>
 
         
         </Box>
@@ -142,7 +166,7 @@ function SubmitButton ({loginRequestActive}) {
         <Button
             fontWeight="400"
             isLoading={loginRequestActive}
-            loadingText="Logging In..."
+            loadingText="Logging in..."
             color="white"
             bg="primary"
             h="3rem"
@@ -153,7 +177,7 @@ function SubmitButton ({loginRequestActive}) {
             bottom="0"
             borderRadius="0px 0px 5px 5px" 
             _hover={{filter: "brightness(110%)"}}
-        >Log In</Button>
+        >Sign In</Button>
     )
 }
 
@@ -165,7 +189,7 @@ function WelcomeText() {
             justify="start"
             align="center"
             h="50px">
-            <Text color="#505564" fontSize="20px" fontWeight="600">Welcome Back!</Text>
+            <Text color="#505564" fontSize="20px" fontWeight="600">Welcome back!</Text>
         </Flex>
     )
 }
@@ -193,11 +217,11 @@ function StoreUserSwitch({register}) {
 
 function HelpSection() {
     return (
-        <Flex mt=".75rem" direction="column" color="grey_mute">
+        <Flex mt=".75rem" direction="column" color="text_mute">
             <Link fontSize="13px">Forgot your password?</Link>
             <Text fontSize="13px" mt=".25rem">
                 Don't have an account?
-                <Link ml=".25rem" color="pink_emphasize">Sign Up</Link>
+                <Link ml=".25rem" color="pink_emphasize" href="/register">Sign Up</Link>
             </Text>
         </Flex>
     )
