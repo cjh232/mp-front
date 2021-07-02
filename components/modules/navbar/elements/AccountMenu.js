@@ -6,6 +6,7 @@ import {
     MenuItem,
     MenuGroup, 
     Text,
+    Avatar
   } from '@chakra-ui/react';
 
   import { 
@@ -13,41 +14,127 @@ import {
      HiOutlineMailOpen,
      HiOutlineUserCircle,
      HiOutlineShoppingCart,
-     HiOutlineLogout
+     HiOutlineLogout,
+     HiUserAdd,
+     HiLogin,
      } from 'react-icons/hi';
 
-export default function AccountMenu (props) {
+     import { useRouter } from 'next/router'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../../redux/auth/auth.actions'
+
+export default function AccountMenu ({ displayName, isAuthenticated }) {
+
+    const dispatch = useDispatch();
+    const router = useRouter()
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
+
+    const renderMenuGroup = () => {
+        if(isAuthenticated) {
+            return (<AuthenticatedMenuGroup 
+                        firstName={displayName.split(' ')[0]}
+                        handleLogout={handleLogout}
+                        handleMenuItemClick={handleMenuItemClick}
+                    />)
+        } else {
+            return <UnAuthenticatedMenuGroup handleMenuItemClick={handleMenuItemClick} />
+        }
+    }
+
+    const handleMenuItemClick = (href) => {
+        router.push(href)
+    }
+
     return (
-        <Menu>
+        <Menu placement="bottom" matchWidth closeOnBlur >
             <MenuButton 
-                w="27px"
-                h="27px" 
                 transition="all 0.2s"
-                color="gray.500"
+                color="header"
                 _hover={{cursor: 'pointer'}}
-                ><HiMenu size="20px"/></MenuButton>
-            <MenuList>
-            <MenuGroup   title={`Hey, ${props.firstName}!`}>
-                <MenuDivider />
-                <MenuItem icon={<HiOutlineMailOpen size="18px"/>}>
-                    <Text fontSize="14px">Messages (3)</Text>
-                </MenuItem>
-
-                <MenuItem icon={<HiOutlineUserCircle size="18px"/>}>
-                    <Text fontSize="14px">Profile</Text>
-                </MenuItem>
-
-                <MenuItem icon={<HiOutlineShoppingCart size="18px"/>}>
-                    <Text fontSize="14px">Cart (2)</Text>
-                </MenuItem>
-
-                <MenuDivider />
-
-                <MenuItem icon={<HiOutlineLogout size="18px"/>} onClick={() => props.onLogout()}>
-                    <Text fontSize="14px">Log Out</Text>
-                </MenuItem>
-            </MenuGroup>
+                ><Avatar name={displayName} size="sm"/></MenuButton>
+            <MenuList mt="24px">
+                { renderMenuGroup() }
             </MenuList>
         </Menu>
+    )
+}
+
+function AuthenticatedMenuGroup ({ firstName, handleMenuItemClick, handleLogout }) {
+
+    const headerText = `Hey, ${firstName}!`
+
+    return (
+        <MenuGroup   title={headerText} >
+            <MenuDivider />
+            <MenuItem 
+                iconSpacing="8px" 
+                color="text_mute"
+                icon={<HiOutlineMailOpen size="20px"/>}
+            >
+                <Text color="heading" fontSize="14px">Messages (3)</Text>
+            </MenuItem>
+
+            <MenuItem 
+                iconSpacing="8px" 
+                color="text_mute"
+                icon={<HiOutlineUserCircle size="20px"/>}
+            >
+                <Text color="heading" fontSize="14px">Profile</Text>
+            </MenuItem>
+
+            <MenuItem  
+                iconSpacing="8px" 
+                color="text_mute"
+                icon={<HiOutlineShoppingCart size="20px"/>}
+            >
+                <Text color="heading" fontSize="14px">Cart (2)</Text>
+            </MenuItem>
+
+            <MenuDivider />
+
+            <MenuItem 
+                iconSpacing="8px" 
+                color="text_mute"
+                icon={<HiOutlineLogout size="20px"/>} 
+                onClick={handleLogout}
+            >
+                <Text color="heading" fontSize="14px">Log Out</Text>
+            </MenuItem>
+        </MenuGroup>
+    )
+}
+
+function UnAuthenticatedMenuGroup ({handleMenuItemClick}) {
+    
+    return (
+        <MenuGroup>
+            <MenuItem 
+                icon={<HiUserAdd size="20px"/>}
+                iconSpacing="8px"
+                onClick={() => handleMenuItemClick("/register")} 
+                color="text_mute">
+                <Text 
+                    fontSize="14px"
+                    color="heading"
+                    href="/register"
+                >Sign Up</Text>
+            </MenuItem>
+
+            <MenuItem 
+                icon={<HiLogin size="20px"/>}
+                iconSpacing="8px"
+                onClick={() => handleMenuItemClick("/login")} 
+                color="text_mute">
+                <Text 
+                    fontSize="14px" 
+                    color="heading"
+                    href="/login"
+                >Login</Text>
+            </MenuItem>
+        </MenuGroup>
     )
 }

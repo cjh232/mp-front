@@ -21,7 +21,7 @@ import {
 
 
 /** Redux */
-import { logInRequested } from '../../../redux/auth/actions'
+import { logInRequested } from '../../../redux/auth/auth.actions'
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './loginForm.module.css';
@@ -32,9 +32,9 @@ import { HiOutlineMail, HiOutlineKey } from 'react-icons/hi';
 
 export default function LoginForm (props) {
    
-    const authReducer = useSelector(state => state.auth)
-    const storedUser = authReducer.storedUser
-    const requestStatus = authReducer.requestStatus
+    const auth = useSelector(state => state.auth)
+    const storedEmail = auth.storedEmail
+    const loading = auth.loading
     
     const dispatch = useDispatch();
     const router = useRouter();
@@ -64,19 +64,20 @@ export default function LoginForm (props) {
     React.useEffect(() => {
         // Request Status changes twice, once when request starts
         // and once when it ends. Want to pick up only the ending change.
-        if(requestStatus.active) {
+        if(loading) {
             return
         }
-        if(!requestStatus.success) {
-            if(requestStatus.error !== null && requestStatus.error.detail) {
-                authErrorToast(requestStatus.error.detail);
+
+        if(auth.error) {
+            if(auth.error !== null && auth.error.detail) {
+                authErrorToast(auth.error.detail);
             }
             
-        } else {
-            successToast()
+        } else if(auth.user !== null){
+            successToast();
         }
 
-    }, [requestStatus])
+    }, [loading])
 
 
     const validationSchema = Yup.object().shape({
@@ -86,7 +87,7 @@ export default function LoginForm (props) {
     })
     
     const initialValues = {
-        email: storedUser,
+        email: storedEmail,
         password: "",
         rememberUser: true,
     }
@@ -106,6 +107,8 @@ export default function LoginForm (props) {
             rememberUser: values.rememberUser,
             router: router
         }
+
+        console.log(payload)
 
         dispatch(logInRequested(payload))
 
@@ -152,7 +155,7 @@ export default function LoginForm (props) {
                 
             </form>
 
-            <SubmitButton loginRequestActive={requestStatus.active}/>
+            <SubmitButton isloading={loading}/>
 
         
         </Box>
@@ -161,11 +164,11 @@ export default function LoginForm (props) {
 
 }
 
-function SubmitButton ({loginRequestActive}) {
+function SubmitButton ({isloading}) {
     return (
         <Button
             fontWeight="400"
-            isLoading={loginRequestActive}
+            isLoading={isloading}
             loadingText="Logging in..."
             color="white"
             bg="primary"
@@ -189,7 +192,7 @@ function WelcomeText() {
             justify="start"
             align="center"
             h="50px">
-            <Text color="#505564" fontSize="20px" fontWeight="600">Welcome back!</Text>
+            <Text color="heading" fontSize="20px" fontWeight="600">Welcome back!</Text>
         </Flex>
     )
 }
@@ -208,7 +211,12 @@ function StoreUserSwitch({register}) {
                 colorScheme="pink"
                 defaultChecked
                 size="sm"/>
-            <FormLabel ml=".5rem" mb="0" fontSize="13px" fontWeight="600">
+            <FormLabel 
+                ml=".5rem" 
+                mb="0" 
+                color="sub_heading"
+                fontSize="13px" 
+                fontWeight="600">
                 Remember me?
             </FormLabel>
         </FormControl>
@@ -221,7 +229,10 @@ function HelpSection() {
             <Link fontSize="13px">Forgot your password?</Link>
             <Text fontSize="13px" mt=".25rem">
                 Don't have an account?
-                <Link ml=".25rem" color="pink_emphasize" href="/register">Sign Up</Link>
+                <Link 
+                    ml=".25rem" 
+                    fontWeight="600"
+                    color="primary" href="/register">Sign Up</Link>
             </Text>
         </Flex>
     )

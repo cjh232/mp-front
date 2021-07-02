@@ -63,7 +63,7 @@ export default function FormInput({
                     
 
                 </InputGroup>
-                <FormHelperText fontSize="12px">{helpText}</FormHelperText>
+                {!error && <FormHelperText position="absolute" fontSize="12px">{helpText}</FormHelperText>}
 
                 {error && renderError(error.message)}
             </FormControl>

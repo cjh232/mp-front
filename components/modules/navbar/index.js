@@ -5,10 +5,8 @@ import {
 } from '@chakra-ui/react';
 
 // components
-import Search from './elements/Search'
-import Nav from './elements/Nav'
-
-
+import NavLinks from './elements/NavLinks'
+import Tools from './elements/Tools';
 
 export default function Navbar () {
 
@@ -27,10 +25,10 @@ export default function Navbar () {
         h="72px"
         borderBottom="1px solid #E2E8F0"        
         >
-            <Container justify="space-between" w="1440px" align="center"> 
+            <Container justify="space-between" w={[1140, 1280]} align="center"> 
                 <Logo />
-                <Search />
-                <Nav />
+                <NavLinks />
+                <Tools />
             </Container>
         </Flex>
     )
