@@ -21,15 +21,16 @@ import {
 
      import { useRouter } from 'next/router'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../../../redux/auth/auth.actions'
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/auth/auth.actions'
 
-export default function AccountMenu ({ displayName, isAuthenticated }) {
+export default function MenuDropdown ({ displayName, isAuthenticated }) {
 
     const dispatch = useDispatch();
     const router = useRouter()
 
     const handleLogout = () => {
+        console.log("logging out...")
         dispatch(logout())
     }
 
@@ -50,13 +51,13 @@ export default function AccountMenu ({ displayName, isAuthenticated }) {
     }
 
     return (
-        <Menu placement="bottom" matchWidth closeOnBlur >
+        <Menu placement="bottom" matchWidth closeOnBlur>
             <MenuButton 
                 transition="all 0.2s"
                 color="header"
                 _hover={{cursor: 'pointer'}}
                 ><Avatar name={displayName} size="sm"/></MenuButton>
-            <MenuList mt="24px">
+            <MenuList mt="24px" zIndex="3">
                 { renderMenuGroup() }
             </MenuList>
         </Menu>

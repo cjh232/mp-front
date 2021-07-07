@@ -38,12 +38,14 @@ function CustomLink ({href, title, isActive}) {
         fontWeight="600"
         letterSpacing=".5px"
         color={isActive ? "heading" : "text_mute"}
+        borderBottom={isActive ? "1px" : "0px"}
         _focus={{
             boxShadow: "none"
         }}
         _hover={{
             textDecoration: "none",
-            color: "primary"
+            color: "primary",
+            borderBottom: "1px"
         }}
         href={href}
         >

@@ -3,63 +3,47 @@ import {
     Flex, 
     Text, 
     Image,
-    VStack
+    VStack,
+    LinkOverlay,
+    LinkBox
 } from '@chakra-ui/react';
 
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 
-export default function ProductCard (props) {
+import {HoverOverlay } from './hover-overlay';
+import { CardContent } from './card-content';
 
-    const testTitle = "King Ice Black Mamba Number 24 Necklace"
-    const testBrand = "King Ice"
 
-    const imgHeight = "300px"
+export default function ProductCard ({title, brand, id}) {
+
+    const imgHeight = "400px"
+    const placeholderImageSrc = "https://via.placeholder.com/274x400/E6558C/FFFFFF?text=Mitzys+People"
+
+    // {<HoverOverlay imgHeight={imgHeight} />}
 
     return (
-        <Box 
-            w="240px" 
-            h="360px"  
+        <LinkBox 
+            h="480px"  
         >
+            <LinkOverlay href={`/shop/product/${id}`}> 
+                <VStack spacing={0}>
+                    <Image 
+                        w="100%" 
+                        bg="gray"
+                        h={imgHeight} 
+                        src="/images/boots.jpg" 
+                        borderRadius="5px"
+                        fallbackSrc={placeholderImageSrc} 
+                        _hover={{
+                            cursor: "pointer"
+                        }}
+                    />
 
-            <VStack spacing={0}>
-                <Image 
-                    w="100%" 
-                    bg="gray"
-                    h={imgHeight} 
-                    src="gibbresh.png" 
-                    borderRadius="5px"
-                    fallbackSrc="https://via.placeholder.com/240x300"  
-                    _hover={{
-                        cursor: "pointer"
-                    }}
-                />
-
-                <Box
-                    zIndex="60"
-                    h={imgHeight}
-                    position="absolute"
-                    w="240px"
-                    opacity="0"
-                    _hover={{
-                        opacity: "1",
-                        cursor: "pointer"
-                    }}
-                >
-                    <ViewProduct/>
-                </Box>
-                
-
-                <ContentSection 
-                    title={testTitle}
-                    brand={testBrand}
-                    w="100%"
-                    className="content_section" 
-                    pt="8px"
-                    h="60px"/>
-
-            </VStack>
-            
-        </Box>
+                    <CardContent title={title} brand={brand} pt="8px" h="60px" w="100%"/>
+                    
+                </VStack>
+            </LinkOverlay>
+        </LinkBox>
     )
 }
 

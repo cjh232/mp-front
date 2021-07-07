@@ -6,7 +6,7 @@ import Footer from '../modules/footer'
 
 const name = 'Christian Hunter'
 export const siteTitle = 'Next.js Sample Website'
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 export default function Layout({ children, login }) {
 
@@ -14,19 +14,22 @@ export default function Layout({ children, login }) {
   const contentClassName = login ? `${styles.content} ${styles.content_login}` : styles.content
 
   return (
-    <Box 
+    <Flex 
+      direction="column"
       className={containerClassName}
       bg={!login ? "background" : ""}
     >
       {!login &&  <Navbar />}
-      <Box 
+      <Flex 
+        direction="column"
         className={contentClassName}
-        w={[1140, 1280]}
+        mt={login ? '0': '65px'}
+        w={{sm: 300, md: "80%", lg: 1140, xl: 1440}}
       >
         {children}
-      </Box>
+      </Flex>
       {login && <Footer />}
-    </Box>
+    </Flex>
     
   )
 }

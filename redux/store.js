@@ -19,7 +19,7 @@ let middlewares = applyMiddleware(sagaMiddleWare, logger);
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['userRegister']
+    blacklist: ['userRegister', 'productList', 'categories']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

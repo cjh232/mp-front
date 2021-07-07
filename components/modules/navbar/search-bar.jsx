@@ -9,7 +9,7 @@ import {
 import { HiOutlineSearch } from 'react-icons/hi';
 
 // CSS
-import styles from '../styles/search.module.css'
+import styles from './styles/search.module.css'
 
 export default function Search (props) {
 

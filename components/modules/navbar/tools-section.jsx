@@ -1,7 +1,7 @@
 import { HStack } from '@chakra-ui/react';
 import { HiSearch } from 'react-icons/hi'
 import { useSelector } from 'react-redux';
-import AccountMenu from './AccountMenu'
+import MenuDropdown from './menu-dropdown'
 
 //TODO: Add search functionality
 
@@ -19,7 +19,7 @@ export default function Tools () {
     return (
       <HStack w="80px" spacing="24px" color="heading">
         <HiSearch size="20px"/>
-        <AccountMenu displayName={displayName} isAuthenticated={auth.isAuthenticated}/>
+        <MenuDropdown displayName={displayName} isAuthenticated={auth.isAuthenticated}/>
       </HStack>  
     )
 }

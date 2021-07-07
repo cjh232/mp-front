@@ -4,12 +4,23 @@ import { combineReducers } from "redux";
 
 import {
     authPersistReducer,
-    registerUserReducer
+    registerUserReducer,
 } from './auth/auth.reducers'
+
+import {
+    filtersReducer,
+    productListPersistReducer,
+    categoriesReducerPersist,
+    productReducer
+} from './store/store.reducers'
 
 const rootReducer = combineReducers({
     auth: authPersistReducer, 
-    userRegister: registerUserReducer
+    userRegister: registerUserReducer,
+    productList: productListPersistReducer,
+    filters: filtersReducer,
+    categories: categoriesReducerPersist,
+    productDetails: productReducer,
 })
 
 export default rootReducer;

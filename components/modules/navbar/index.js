@@ -1,20 +1,25 @@
 import {
     Flex,
     HStack,
-    Text
+    Text,
+    Box,
+    Icon
 } from '@chakra-ui/react';
 
 // components
-import NavLinks from './elements/NavLinks'
-import Tools from './elements/Tools';
+import NavLinks from './nav-links'
+import Tools from './tools-section';
 
-export default function Navbar () {
+import styles from './search.module.css';
+
+export default function Navbar (props) {
 
     const backgroundColor = "#ffffff"
 
     return (
         <Flex
-        zIndex="fixed"
+        zIndex="sticky"
+        position="fixed"
         wrap="wrap"
         bg={backgroundColor}
         as="nav"
@@ -22,10 +27,13 @@ export default function Navbar () {
         justify="center"
         p={3}
         w="100%"
-        h="72px"
+        h="65px"
         borderBottom="1px solid #E2E8F0"        
         >
-            <Container justify="space-between" w={[1140, 1280]} align="center"> 
+            <Container 
+                justify="space-between" 
+                w={{sm: 300, md: "80%", lg: 1140, xl: 1440}} 
+                align="center"> 
                 <Logo />
                 <NavLinks />
                 <Tools />
@@ -44,7 +52,7 @@ function Container ({children, ...props}) {
 
 function Logo () {
     return (
-        <HStack spacing=".5rem">
+        <HStack spacing=".5rem" align="center" h="100%" _hover={{cursor: "pointer"}}>
             <Text>Logo</Text>
         </HStack>
     )

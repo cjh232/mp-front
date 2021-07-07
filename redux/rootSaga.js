@@ -5,10 +5,20 @@ import {
     registerWatcherSaga
 } from './auth/auth.sagas';
 
+import {
+    onProductsListRequest,
+    onCategoryDetailsRequest,
+    onApplyFiltersRequest,
+    onProductDetailsRequest
+} from './store/store.sagas';
 
 export default function* rootSaga() {
     yield all([
         loginWatcherSaga(),
-        registerWatcherSaga()
+        registerWatcherSaga(),
+        onProductsListRequest(),
+        onCategoryDetailsRequest(),
+        onApplyFiltersRequest(),
+        onProductDetailsRequest()
     ])
 };

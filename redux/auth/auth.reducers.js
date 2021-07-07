@@ -33,7 +33,7 @@ const authReducer = (state = initState, action) => {
 }
 
 
-const registerUserReducer = (state = {loading: false, error: null}, action) => {
+const registerUserReducer = (state = {loading: false, error: null, ok: false}, action) => {
     switch(action.type) {
         case types.REGISTER_START:
             return { loading: true, error: null, ok: false }

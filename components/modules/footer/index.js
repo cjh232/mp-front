@@ -17,7 +17,8 @@ export default function Footer() {
         justify="space-between"
         align="center"
         bg="primary"
-        color="white">
+        color="white"
+        >
         
             <FooterTools />
             <Text fontSize="14px">Want to see what's available?</Text>
@@ -33,7 +34,7 @@ function FooterTools () {
     const tools = ["React", "Django", "Redux", "Python", "Javascript", "NextJS"];
 
     return (
-        <HStack spacing={3}>
+        <HStack spacing={3} display={{sm: "none", md:"flex"}}>
             {tools.map(toolString => {
                 return (
                     <Flex align="center" key={toolString}>
