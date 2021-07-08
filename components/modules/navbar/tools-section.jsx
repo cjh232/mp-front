@@ -5,7 +5,7 @@ import MenuDropdown from './menu-dropdown'
 
 //TODO: Add search functionality
 
-export default function Tools () {
+export default function Tools (props) {
 
     const auth = useSelector(state => state.auth)
     const user = auth.user
@@ -17,7 +17,7 @@ export default function Tools () {
     }
 
     return (
-      <HStack w="80px" spacing="24px" color="heading">
+      <HStack w="80px" spacing="24px" color="heading" {...props}>
         <HiSearch size="20px"/>
         <MenuDropdown displayName={displayName} isAuthenticated={auth.isAuthenticated}/>
       </HStack>  

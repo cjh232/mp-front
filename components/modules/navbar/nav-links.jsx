@@ -6,7 +6,7 @@ import {
 import { useRouter } from 'next/router'
 
 
-export default function NavLinks () {
+export default function NavLinks (props) {
 
     const router = useRouter()
 
@@ -16,7 +16,7 @@ export default function NavLinks () {
     }
 
     return (
-        <HStack w="300px" spacing="48px">
+        <HStack w="300px" spacing="48px" {...props}>
             <CustomLink 
                 title="Home" 
                 href="/" 

@@ -53,9 +53,23 @@ async function productDetailsApi (productId) {
     return res.data
 }
 
+async function productSizesApi (productId, color) {
+
+    const url = `http://localhost:8000/products/details/${productId}/options/?color=${color}`
+
+    let res = await axios.request({
+        method: 'get',
+        url: url,
+        withCredentials: true,
+    });
+
+    return res.data
+}
+
 export {
     productListApi,
     categoryApi,
     filterProductsApi,
-    productDetailsApi
+    productDetailsApi,
+    productSizesApi
 }

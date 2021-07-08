@@ -28,7 +28,18 @@ const productListReducer = (state = {
     }
 }
 
-const productReducer = (state = {loading: false, product: null}, action) => {
+const initProduct = {
+    id: '',
+    title: '',
+    slug: '',
+    category_name: '',
+    sub_category_name: '',
+    brand: '',
+    details: '',
+    available_colors: []
+}
+
+const productReducer = (state = {loading: false, product: initProduct, sizes: [], error: null}, action) => {
     switch(action.type) {
         case types.PRODUCT_DETAILS_START:
             return {...state, loading: true};
@@ -38,6 +49,19 @@ const productReducer = (state = {loading: false, product: null}, action) => {
             return {loading: false, error: action.payload};
         default:
             return state;
+    }
+}
+
+const sizesReducer = (state = {loading: false, sizes: [], error: null}, action) => {
+    switch(action.type) {
+        case types.PRODUCT_SIZES_START:
+            return {...state, loading: true}
+        case types.PRODUCT_SIZES_SUCCESS:
+            return {loading: false, sizes: action.payload}
+        case types.PRODUCT_SIZES_FAILURE:
+            return {loading: false, sizes: [], error: action.payload}
+        default:
+            return state
     }
 }
 
@@ -105,5 +129,6 @@ export {
     productListPersistReducer,
     filtersReducer,
     categoriesReducerPersist,
-    productReducer
+    productReducer,
+    sizesReducer
 };

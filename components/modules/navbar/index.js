@@ -10,6 +10,8 @@ import {
 import NavLinks from './nav-links'
 import Tools from './tools-section';
 
+import { HiMenu } from 'react-icons/hi'
+
 import styles from './search.module.css';
 
 export default function Navbar (props) {
@@ -32,11 +34,17 @@ export default function Navbar (props) {
         >
             <Container 
                 justify="space-between" 
-                w={{sm: 300, md: "80%", lg: 1140, xl: 1440}} 
+                w={{sm: 400, md: "80%", lg: 1140, xl: 1440}} 
                 align="center"> 
                 <Logo />
-                <NavLinks />
-                <Tools />
+
+                <Icon as={HiMenu} display={{ md: "none"}} boxSize="25px" />
+                <NavLinks 
+                    display={{sm:"none", md: "flex"}}
+                />
+                <Tools 
+                    display={{sm:"none", md: "flex"}}
+                />
             </Container>
         </Flex>
     )

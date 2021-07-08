@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import Layout from '../../components/layouts/layout';
+import Layout from 'components/layouts/layout';
 import Head from 'next/head'
 
 import {
@@ -12,14 +12,14 @@ import {
 } from '@chakra-ui/react';
 
 // Components
-import { ProductGallery } from '../../components/modules/product-gallery'
-import Filter from '../../components/modules/product-filters'
+import { ProductGallery } from 'components/modules/product-gallery'
+import Filter from 'components/modules/product-filters'
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { listProducts, getCategoryDetails } from '../../redux/store/store.actions';
+import { listProducts, getCategoryDetails } from 'redux/store/store.actions';
 
-import { Headline } from '../../components/modules/headline';
+import { Headline } from 'components/modules/headline';
 
 export default function Shop () {
     const router = useRouter();

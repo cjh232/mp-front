@@ -3,7 +3,8 @@ import {
     productListApi,
     categoryApi,
     filterProductsApi,
-    productDetailsApi
+    productDetailsApi,
+    productSizesApi
 } from './store.api';
 
 import {
@@ -19,7 +20,10 @@ import {
     loadFilters,
     productDetailsStart,
     productDetailsSuccess,
-    productDetailsFailure
+    productDetailsFailure,
+    productSizesStart,
+    productSizesFailure,
+    productSizesSuccess
 } from './store.actions';
 
 import types from './store.types';
@@ -79,6 +83,7 @@ export function* updateProductsList(action) {
 
 export function* getProductDetails(action) {
     yield put(productDetailsStart())
+    yield put(productSizesStart())
 
     try {
         const productId = action.payload
@@ -87,6 +92,30 @@ export function* getProductDetails(action) {
 
         yield put(productDetailsSuccess(productDetails))
         
+        const color = productDetails.available_colors[0]
+
+        let data = yield call(productSizesApi, productId, color)
+        yield put(productSizesSuccess(data.sizes))
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export function* getProductSizes(action) {
+    yield put(productSizesStart())
+
+    try {
+        const productId = action.payload.productId
+        const color = action.payload.color
+
+        console.log(productId, color)
+
+        let data = yield call(productSizesApi, productId, color)
+
+        yield put(productSizesSuccess(data.sizes))
+
+        console.log(data.sizes)
     } catch (error) {
         console.log(error)
     }
@@ -107,3 +136,8 @@ export function* onApplyFiltersRequest() {
 export function* onProductDetailsRequest() {
     yield takeLatest(types.PRODUCT_DETAILS_REQUEST, getProductDetails)
 }
+
+export function* onProductSizesRequest() {
+    yield takeLatest(types.PRODUCT_SIZES_REQUEST, getProductSizes)
+}
+

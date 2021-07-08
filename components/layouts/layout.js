@@ -24,7 +24,7 @@ export default function Layout({ children, login }) {
         direction="column"
         className={contentClassName}
         mt={login ? '0': '65px'}
-        w={{sm: 300, md: "80%", lg: 1140, xl: 1440}}
+        w={{sm: 400, md: "80%", lg: 1140, xl: 1440}}
       >
         {children}
       </Flex>

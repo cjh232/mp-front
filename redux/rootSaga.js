@@ -9,7 +9,8 @@ import {
     onProductsListRequest,
     onCategoryDetailsRequest,
     onApplyFiltersRequest,
-    onProductDetailsRequest
+    onProductDetailsRequest,
+    onProductSizesRequest
 } from './store/store.sagas';
 
 export default function* rootSaga() {
@@ -19,6 +20,7 @@ export default function* rootSaga() {
         onProductsListRequest(),
         onCategoryDetailsRequest(),
         onApplyFiltersRequest(),
-        onProductDetailsRequest()
+        onProductDetailsRequest(),
+        onProductSizesRequest()
     ])
 };

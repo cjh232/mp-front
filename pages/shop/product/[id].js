@@ -1,122 +1,152 @@
 import React from 'react'
-import Layout from '../../../components/layouts/layout';
+import ProductLayout from 'components/layouts/product-layout';
 import { useRouter } from 'next/router';
 
 import { 
     Text, 
     Flex, 
-    Image, 
-    Breadcrumb, 
-    BreadcrumbItem, 
-    BreadcrumbLink,
+    Button,
+    Select,
     Tabs,
-    Tab,
     TabList,
     TabPanels,
     TabPanel,
-    Button
+    Tab,
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    Divider
   } from '@chakra-ui/react';
 
-import { HiHeart } from 'react-icons/hi'
+import Section from 'components/layouts/section';
+import Carousel from 'components/modules/carousel';
+import ProductSizes from 'components/modules/product-sizes';
 
 // Redux
-import { getProductDetails } from '../../../redux/store/store.actions';
+import { getProductDetails } from 'redux/store/store.actions';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { getProductSizes } from 'redux/store/store.actions';
 
 export default function Product() {
     const router = useRouter();
     const dispatch = useDispatch();
     const product = useSelector(state => state.productDetails).product
+    const sizes = useSelector(state => state.sizes).sizes
 
     const {id} = router.query;
 
+    // TODO: Add method to get new sizes available
+    const getSizesAvailbleInColor = (value) => {
+        if (value) {
+            dispatch(getProductSizes({productId: id, color: value}))
+        } 
+    }
+
     React.useEffect(() => {
         if (id !== undefined) {
-            console.log(id)
             dispatch(getProductDetails(id))
         }
     }, [id])
 
     return (
-        <Layout>
-            <Flex w="100%" mt="64px" align="center" justify="center" direction="column">
+        <ProductLayout>
+            <Section 
+                w="100%" 
+                h="600px"
+                borderBottom="1px solid #D1DBE0" 
+                bg="#F1F1F1" 
+                mt="65px" >
+                <Carousel />
                 <Flex 
-                    direction="row" 
-                    w="80%" 
-                    justify="space-between" 
-                    align="start"
-                >
-                    <Image w="50%" h="500px"/>
-                    <ProductDetails 
-                        w="50%"
-                        h="600px"
-                        p="32px"
-                        category={product.category_name}
-                        sub_category={product.sub_category_name}
-                        title={product.title} 
-                        details={product.details}/>
+                    direction="column" 
+                    position="relative"
+                    justify="flex-start"
+                    align="start" 
+                    h="525px"
+                    ml="48px" 
+                    >
+                    <Text 
+                        fontSize="32px" 
+                        w="550px" 
+                        color="heading" 
+                        fontWeight="600">{product.title}</Text>
+
+                    <Breadcrumb fontSize="16px" color="sub_heading" fontWeight="500">
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href={`/shop/${product.category_name.toLowerCase()}`}>{product.category_name}</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem>
+                        <BreadcrumbLink href={`/shop/${product.sub_category_name.toLowerCase()}`}>{product.sub_category_name}</BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+
+                    <ProductSizes sizes={sizes} mt="80px"/>
+                    <Select 
+                        onChange={(e) => getSizesAvailbleInColor(e.target.value)}
+                        mt="24px" 
+                        defaultValue={product.available_colors[0]}
+                        fontSize="14px" 
+                        w="150px" 
+                        h="40px"
+                        variant="filled"
+                        bg="white"
+                        borderRadius="5px"
+                        placeholder="Select a color"
+                    >
+                        {
+                            product.available_colors.map(color => {
+                                return <option onSelect={(value) => console.log(value)} value={color}>{color}</option>
+                            })
+                        }
+                    </Select>
+                    <Button mt="95px" borderRadius="2px" variant="submit">Add to Favorites</Button>
                 </Flex>
+            </Section>
+            <Section>
+            
+                <Tabs mt="32px" w="650px" colorScheme="pink">
+                    <TabList>
+                        {
+                            ["Details", "Comments", "Meta"].map(section => {
+                                return (
+                                    <Tab 
+                                        _focus={{boxShadow: "none"}} 
+                                        color="heading" 
+                                        fontWeight="600">{section}</Tab>
+                                )
+                            })
+                        }
+                    </TabList>
 
-                <MetaTabs 
-                    colors={product.available_colors} 
-                    sub_category={product.sub_category_name}
-                    category={product.category_name} />
-            </Flex>
-        </Layout>
+                    <TabPanels>
+                        <TabPanel>
+                            <Text 
+                                fontSize="14px" 
+                                whiteSpace="pre-line"
+                                textAlign="justify"
+                                color="sub_heading"
+                            >{product.details}</Text>
+                        </TabPanel>
+                        <TabPanel>
+                            <p>Coming soon...</p>
+                        </TabPanel>
+                        <TabPanel fontSize="14px" >
+                            <Text fontWeight="600" >Category:</Text><Text>{product.category_name}</Text>
+
+                            <Text fontWeight="600" >Sub Category:</Text><Text>{product.sub_category_name}</Text>
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            
+            </Section>
+        </ProductLayout>
     )
 }
 
-function ProductDetails({title, category, sub_category, details, ...props}) {
-    return (
-        <Flex 
-            direction="column" 
-            {...props}
-            align="start" 
-            justify="flex-start"
-        >
-            <Text fontSize="28px" fontWeight="600">{title}</Text>
-            <Breadcrumb fontSize="14px" color="text_mute" >
-                <BreadcrumbItem>
-                    <BreadcrumbLink href={`/shop/${category.toLowerCase()}`}>{category}</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                    <BreadcrumbLink href={`/shop/${sub_category.toLowerCase()}`}>{sub_category}</BreadcrumbLink>
-                </BreadcrumbItem>
-            </Breadcrumb>
-            <Text mt="64px" whiteSpace="pre-line" textAlign="justify" fontSize="16px">{details}</Text>
 
-            <Button mt="64px" isFullWidth rightIcon={<HiHeart />}>Add to Favorites</Button>
-        </Flex>
-    )
-}
 
-function MetaTabs({colors, category, sub_category, id, brand}) {
-    return (
-        <Tabs w="80%">
-            <TabList>
-                <Tab>Colors</Tab>
-                <Tab>Sizes</Tab>
-                <Tab>Meta</Tab>
-            </TabList>
 
-            <TabPanels>
-                <TabPanel>
-                    {
-                        colors.map(color => {
-                            return (
-                                <Text>{color}</Text>
-                            )
-                        })
-                    }
-                </TabPanel>
-                <TabPanel>
-                    <Text>Coming soon...</Text>
-                </TabPanel>
-                <TabPanel>
-                    <Text><b>Category: </b>{category}</Text>
-                    <Text><b>Sub Category: </b>{sub_category}</Text>
-                </TabPanel>
-            </TabPanels>
-        </Tabs>
-    )
-}
+
+
+

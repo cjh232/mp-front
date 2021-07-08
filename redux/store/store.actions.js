@@ -79,3 +79,19 @@ export const productDetailsSuccess = (productDetails) => {
 export const productDetailsFailure = (error) => {
     return {type: types.PRODUCT_DETAILS_FAILURE}
 }
+
+export const getProductSizes = ({productId, color}) => {
+    return {type: types.PRODUCT_SIZES_REQUEST, payload: {productId, color}}
+}
+
+export const productSizesSuccess = (sizes) => {
+    return {type: types.PRODUCT_SIZES_SUCCESS, payload: sizes}
+}
+
+export const productSizesFailure = (error) => {
+    return {type: types.PRODUCT_SIZES_FAILURE, payload: error}
+}
+
+export const productSizesStart = () => {
+    return {type: types.PRODUCT_SIZES_START}
+}

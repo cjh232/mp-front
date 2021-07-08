@@ -11,7 +11,8 @@ import {
     filtersReducer,
     productListPersistReducer,
     categoriesReducerPersist,
-    productReducer
+    productReducer,
+    sizesReducer
 } from './store/store.reducers'
 
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     filters: filtersReducer,
     categories: categoriesReducerPersist,
     productDetails: productReducer,
+    sizes: sizesReducer,
 })
 
 export default rootReducer;
