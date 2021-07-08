@@ -14,6 +14,8 @@
 ## Product Inventory
 ![Shop](https://user-images.githubusercontent.com/46171942/124995743-d062c100-e015-11eb-8c39-b9b5120d67b4.png)
 
+![Product](https://user-images.githubusercontent.com/46171942/124995854-fdaf6f00-e015-11eb-8f1b-fac9c9728ce1.png)
+
 
 ## User Accounts:
 Application supports the creation of custom user accounts. This will allow users to do things such as 
